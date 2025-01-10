@@ -18,4 +18,48 @@ public class TriangleTests {
         Assertions.assertEquals(29.394, Math.round(testTriangle.triangleArea()*1000.0)/1000.0);
     }
 
+    @Test
+    void negativeSide() {
+        try {
+            new Triangle(-5.0, 3.0, 9.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exceptionSide1) {
+            //OK
+            try {
+                new Triangle(5.0, -3.0, 9.0);
+                Assertions.fail();
+            } catch (IllegalArgumentException exceptionSide2) {
+                //OK
+                try {
+                    new Triangle(5.0, 3.0, -9.0);
+                    Assertions.fail();
+                } catch (IllegalArgumentException exceptionSide3) {
+                    //OK
+                }
+            }
+        }
+    }
+
+    @Test
+    void lengthOfTwoSidesLessThirdSide() {
+        try {
+            new Triangle(2.0, 3.0, 6.0);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception1) {
+            //OK
+            try {
+                new Triangle(2.0, 7.1, 5.0);
+                Assertions.fail();
+            } catch (IllegalArgumentException exception2) {
+                //OK
+                try {
+                    new Triangle(12.01, 4.0, 8.0);
+                    Assertions.fail();
+                } catch (IllegalArgumentException exception3) {
+                    //OK
+                }
+            }
+        }
+    }
+
 }
