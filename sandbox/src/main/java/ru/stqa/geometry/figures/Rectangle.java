@@ -14,4 +14,6 @@ public record Rectangle(double side1, double side2) {
     private double rectangleArea() {
         return side1 * side2;
     }
+
+
 }
