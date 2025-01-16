@@ -10,20 +10,8 @@ public class SquareTests {
         var result = s.area();
         Assertions.assertEquals(25.0, result);
     }
-
     @Test
     void canCalculatePerimeter() {
         Assertions.assertEquals(20.0, new Square(5.0).perimeter());
     }
-
-    @Test
-    void negativeSides() {
-        try {
-            new Square(-5);
-            Assertions.fail();
-        } catch (IllegalArgumentException e) {
-            //OK
-        }
-    }
-
 }
