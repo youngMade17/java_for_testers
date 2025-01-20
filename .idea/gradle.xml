@@ -13,9 +13,8 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="delegatedBuild" value="false" />
-        <option name="testRunner" value="PLATFORM" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/sandbox" />
+        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Gradle" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/sandbox" />
