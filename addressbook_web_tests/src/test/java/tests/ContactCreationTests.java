@@ -7,9 +7,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void canCreateContactWithBasicInfo() {
-        ContactData contactData = new ContactData();
-        ContactData contactDataWithName = contactData.withBasicInfo("1", "2", "2", "2", "2", "2");
-        createContact(contactDataWithName);
+        app.contacts().createContact(new ContactData().withBasicInfo("1", "2", "2", "2", "2", "2"));
     }
 
 }

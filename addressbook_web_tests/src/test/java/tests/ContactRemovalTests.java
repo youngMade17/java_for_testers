@@ -7,10 +7,10 @@ public class ContactRemovalTests extends TestBase {
 
     @Test
     public void canRemoveContact() {
-        if (!isContactPresent()) {
-            createContact(new ContactData().withName("Mikhail3"));
+        if (!app.contacts().isContactPresent()) {
+            app.contacts().createContact(new ContactData().withName("Mikhail3"));
         }
-        removeContact();
+        app.contacts().removeContact();
     }
 
 }
