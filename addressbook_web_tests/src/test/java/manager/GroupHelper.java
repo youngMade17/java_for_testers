@@ -83,7 +83,6 @@ public class GroupHelper extends HelperBase{
 
     public void selectGroup() {
         click(By.xpath("//span[@class='group']/input[@name='selected[]']"));
-        //click(By.name("selected[]"));
     }
 
 }

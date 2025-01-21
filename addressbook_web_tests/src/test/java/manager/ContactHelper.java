@@ -21,8 +21,16 @@ public class ContactHelper extends HelperBase {
     }
 
     public void removeContact() {
-        click(By.cssSelector("#maintable input[name='selected[]']"));
+        selectContact();
+        deleteContactButton();
+    }
+
+    private void deleteContactButton() {
         click(By.cssSelector("input[value='Delete']"));
+    }
+
+    private void selectContact() {
+        click(By.cssSelector("#maintable input[name='selected[]']"));
     }
 
     private void contactHomePageReturn() {
