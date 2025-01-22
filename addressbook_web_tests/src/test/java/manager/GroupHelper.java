@@ -2,6 +2,9 @@ package manager;
 
 import local.GroupData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class GroupHelper extends HelperBase{
 
@@ -36,7 +39,7 @@ public class GroupHelper extends HelperBase{
     public void removeGroup() {
         openGroupsPage();
         selectGroup();
-        removeSelectedGroup();
+        removeSelectedGroups();
         returnToGroupsPage();
     }
 
@@ -48,7 +51,7 @@ public class GroupHelper extends HelperBase{
         click(By.name("new"));
     }
 
-    private void removeSelectedGroup() {
+    private void removeSelectedGroups() {
         click(By.name("delete"));
     }
 
@@ -77,5 +80,18 @@ public class GroupHelper extends HelperBase{
     public int getCount() {
         openGroupsPage();
         return manager.driver.findElements(By.xpath("//span[@class='group']/input[@name='selected[]']")).size();
+    }
+
+    public void removeAllGroups() {
+        openGroupsPage();
+        selectAllGroups();
+        removeSelectedGroups();
+    }
+
+    private void selectAllGroups() {
+        List<WebElement> list = manager.driver.findElements(By.xpath("//span[@class='group']/input[@name='selected[]']"));
+        for (WebElement element : list) {
+            element.click();
+        }
     }
 }
