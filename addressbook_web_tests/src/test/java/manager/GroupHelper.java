@@ -44,22 +44,13 @@ public class GroupHelper extends HelperBase{
         click(By.name("submit"));
     }
 
-
     private void initGroupCreation() {
         click(By.name("new"));
     }
 
-    public boolean isGroupPresent() {
-        openGroupsPage();
-        return manager.isElementPresent(By.xpath("//span[@class='group']/input[@name='selected[]']"));
-
-    }
-
-
     private void removeSelectedGroup() {
         click(By.name("delete"));
     }
-
 
     private void returnToGroupsPage() {
         click(By.linkText("group page"));
@@ -75,14 +66,16 @@ public class GroupHelper extends HelperBase{
         type(By.name("group_footer"), group.footer());
     }
 
-
     private void initGroupModification() {
         click(By.name("edit"));
     }
-
 
     public void selectGroup() {
         click(By.xpath("//span[@class='group']/input[@name='selected[]']"));
     }
 
+    public int getCount() {
+        openGroupsPage();
+        return manager.driver.findElements(By.xpath("//span[@class='group']/input[@name='selected[]']")).size();
+    }
 }
