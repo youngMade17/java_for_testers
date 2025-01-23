@@ -3,6 +3,8 @@ package tests;
 import manager.ApplicationManager;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.Random;
+
 public class TestBase {
     protected static ApplicationManager app;
 
@@ -12,6 +14,15 @@ public class TestBase {
             app = new ApplicationManager();
         }
         app.init(System.getProperty("browser", "chrome"));
+    }
+
+    public String randomString(int count) {
+        Random randomChar = new Random();
+        String str = "";
+        for (int i = 0; i < count; i++) {
+            str = str + (char)('a' + randomChar.nextInt(27));
+        }
+        return str;
     }
 
 
