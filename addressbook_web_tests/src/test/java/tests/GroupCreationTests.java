@@ -3,37 +3,55 @@ package tests;
 import local.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test
-    public void canCreateGroup() {
-        int groupCount = app.groups().getCount();
-        app.groups().createGroup(new GroupData("Group name", "Group header", "Group footer"));
-        int newGroupCount = app.groups().getCount();
-        Assertions.assertEquals(groupCount+1, newGroupCount);
-    }
+    public static ArrayList<GroupData> groupProvider() {
+        ArrayList<GroupData> result = new ArrayList<>(List.of(
+                new GroupData("group name ' ", "", "")
+        ));
 
-
-    @Test
-    public void canCreateGroupWithEmptyName() {
-        app.groups().createGroup(new GroupData());
-    }
-
-    @Test
-    public void canCreateGroupWithOnlyName() {
-        app.groups().createGroup(new GroupData().withName("justName"));
-    }
-
-    @Test
-    public void canCreateMultipleGroup() {
-        int n = 5;
-        int groupCount = app.groups().getCount();
-        for (int i = 0; i < n; i++) {
-            app.groups().createGroup(new GroupData(randomString(n), "Group header", "Group footer"));
+        for (var name : List.of("", "group name")) {
+            for (var header  : List.of("", "header name")) {
+                for (var footer : List.of("", "footer name")) {
+                    result.add(new GroupData(name, header, footer));
+                }
+            }
         }
-        int newGroupCount = app.groups().getCount();
-        Assertions.assertEquals(groupCount + n, newGroupCount);
+
+        for (int i = 0; i < 5; i++) {
+            result.add(new GroupData(randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+        }
+        return result;
     }
+
+    // В тесте ниже описан способ создания параметризированного теста с помощью фиксированных значений
+//    @ParameterizedTest
+//    @ValueSource(strings = {"group name", "group name '"})
+//    public void canCreateGroup(String name) {
+//        int groupCount = app.groups().getCount();
+//        app.groups().createGroup(new GroupData(name, "Group header", "Group footer"));
+//        int newGroupCount = app.groups().getCount();
+//        Assertions.assertEquals(groupCount+1, newGroupCount);
+//    }
+//
+
+    @ParameterizedTest
+    @MethodSource("groupProvider")
+    public void canCreateMultipleGroup(GroupData group) {
+        //int n = 5;
+        int groupCount = app.groups().getCount();
+        //for (int i = 0; i < n; i++) {
+        app.groups().createGroup(group);
+        //}
+        int newGroupCount = app.groups().getCount();
+        Assertions.assertEquals(groupCount + 1, newGroupCount);
+    }
+
 
 }
