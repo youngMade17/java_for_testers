@@ -12,4 +12,12 @@ public record ContactData(String firstName, String lastName, String middleName, 
     public ContactData withName(String firstName) {
         return new ContactData(firstName, this.lastName, this.middleName, this.address, this.email, this.mobile);
     }
+
+    public ContactData withLastName(String lastName) {
+        return new ContactData(this.firstName, lastName, this.middleName, this.address, this.email, this.mobile);
+    }
+
+    public ContactData withMiddleName(String middleName) {
+        return new ContactData(this.firstName, this.lastName, middleName, this.address, this.email, this.mobile);
+    }
 }
