@@ -20,4 +20,6 @@ public record ContactData(String firstName, String lastName, String middleName, 
     public ContactData withMiddleName(String middleName) {
         return new ContactData(this.firstName, this.lastName, middleName, this.address, this.email, this.mobile);
     }
+
+
 }

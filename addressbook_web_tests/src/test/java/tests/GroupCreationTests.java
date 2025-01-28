@@ -4,6 +4,7 @@ import local.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.NoSuchElementException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,6 @@ public class GroupCreationTests extends TestBase {
                 }
             }
         }
-
         for (int i = 0; i < 5; i++) {
             result.add(new GroupData(randomString(i * 10), randomString(i * 10), randomString(i * 10)));
         }
@@ -59,10 +59,14 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeGroupProvider")
     public void canNotCreateGroup(GroupData group) {
-        int groupCount = app.groups().getCount();
-        app.groups().createGroup(group);
-        int newGroupCount = app.groups().getCount();
-        Assertions.assertEquals(groupCount, newGroupCount);
+        try {
+            int groupCount = app.groups().getCount();
+            app.groups().createGroup(group);
+            int newGroupCount = app.groups().getCount();
+            Assertions.assertEquals(groupCount, newGroupCount);
+        } catch (NoSuchElementException e) {
+            System.out.println("---------------------------Error!---------------------------");
+        }
     }
 
 

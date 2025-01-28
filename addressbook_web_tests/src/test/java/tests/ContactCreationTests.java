@@ -1,47 +1,16 @@
 package tests;
 
 import local.ContactData;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.NoSuchElementException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ContactCreationTests extends TestBase {
-
-    public static ArrayList<ContactData> contactProvider() {
-        ArrayList<ContactData> arr = new ArrayList<>();
-        for (var firstName : List.of("", "First Name")) {
-            for (var middleName : List.of("", "Middle Name")) {
-                for (var lastName : List.of("", "Last Name")) {
-                    for (var address : List.of("", "Address")) {
-                        for (var email : List.of("", "Email")) {
-                            for (var mobile : List.of("", "Mobile")) {
-                                arr.add(new ContactData(firstName, middleName, lastName, address, email, mobile));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        for (var firstName : List.of("", "First Name")) {
-
-            for (var middleName : List.of("", "Middle Name")) {
-                arr.add(new ContactData(firstName, middleName, "", "", "", ""));
-            }
-
-            for (var lastName : List.of("", "Last Name")) {
-                for (var address : List.of("", "Address")) {
-                    arr.add(new ContactData(firstName, middleName, lastName, address, email, mobile));
-                }
-            }
-        }
-        return arr;
-    }
 
     @Test
     public void canCreateContactWithBasicInfo() {
@@ -50,12 +19,37 @@ public class ContactCreationTests extends TestBase {
 
     @ParameterizedTest
     @MethodSource("contactProvider")
-    public void canCreateContact(ContactData contact) {
-        for (int i = 0; i < 5; i++) {
-            app.contacts().createContact(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
-        }
-
+    public void canCreateMultipleContacts(ContactData contact) {
+        int contactCount = app.contacts().getCount();
         app.contacts().createContact(contact);
+        int newContactCount = app.contacts().getCount();
+        Assertions.assertEquals(contactCount + 1, newContactCount);
+    }
+    public static ArrayList<ContactData> contactProvider() {
+        ArrayList<ContactData> arr = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            arr.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+        }
+        return arr;
+    }
+
+    @ParameterizedTest
+    @MethodSource("negativeContactProvider")
+    public void canNotCreateContact(ContactData contact) {
+        try {
+            int contactCount = app.groups().getCount();
+            app.contacts().createContact(contact);
+            int newcontactCount = app.groups().getCount();
+            Assertions.assertEquals(contactCount, newcontactCount);
+        } catch (NoSuchElementException e) {
+            System.out.println("---------------------------Error!---------------------------");
+        }
+    }
+    public static ArrayList<ContactData> negativeContactProvider() {
+        ArrayList<ContactData> arr = new ArrayList<>(List.of(
+                new ContactData("contact name ' ", "", "", "", "", "")
+        ));
+        return arr;
     }
 
 

@@ -2,6 +2,9 @@ package manager;
 
 import local.ContactData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -22,6 +25,11 @@ public class ContactHelper extends HelperBase {
 
     public void removeContact() {
         selectContact();
+        deleteContactButton();
+    }
+
+    public void removeAllContacts() {
+        selectAllContacts();
         deleteContactButton();
     }
 
@@ -104,4 +112,14 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public int getCount() {
+        return manager.driver.findElements(By.cssSelector("#maintable input[name='selected[]']")).size();
+    }
+
+    private void selectAllContacts() {
+        List<WebElement> contactsList = manager.driver.findElements(By.cssSelector("#maintable input[name='selected[]']"));
+        for (WebElement contactElement :contactsList) {
+            contactElement.click();
+        }
+    }
 }
