@@ -39,8 +39,8 @@ public class ContactCreationTests extends TestBase {
         try {
             int contactCount = app.groups().getCount();
             app.contacts().createContact(contact);
-            int newcontactCount = app.groups().getCount();
-            Assertions.assertEquals(contactCount, newcontactCount);
+            int newContactCount = app.groups().getCount();
+            Assertions.assertEquals(contactCount, newContactCount);
         } catch (NoSuchElementException e) {
             System.out.println("---------------------------Error!---------------------------");
         }
