@@ -53,7 +53,6 @@ public class GroupCreationTests extends TestBase {
     @MethodSource("groupProvider")
     public void canCreateMultipleGroup(GroupData group) {
         var oldGroups = app.groups().getList();
-        //int groupCount = app.groups().getCount();
         app.groups().createGroup(group);
         var newGroups = app.groups().getList();
         Comparator<GroupData> compareById = (o1, o2) -> {

@@ -4,6 +4,7 @@ import local.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -23,8 +24,21 @@ public class ContactHelper extends HelperBase {
         contactHomePageReturn();
     }
 
-    public void removeContact() {
-        selectContact();
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        //selectContact(contact);
+        initContactModification(contact);
+        fillContactFields(modifiedContact);
+        modificationContactButton();
+        contactHomePageReturn();
+    }
+
+    private void initContactModification(ContactData contact) {
+        //click(By.name("edit"));
+        click(By.cssSelector(String.format("a[href='edit.php?id=%s']", contact.id())));
+    }
+
+    public void removeContact(ContactData contact) {
+        selectContact(contact);
         deleteContactButton();
     }
 
@@ -37,8 +51,9 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector("input[value='Delete']"));
     }
 
-    private void selectContact() {
-        click(By.cssSelector("#maintable input[name='selected[]']"));
+    private void selectContact(ContactData contact) {
+        //click(By.cssSelector("#maintable input[name='selected[]']"));
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
     private void contactHomePageReturn() {
@@ -47,6 +62,10 @@ public class ContactHelper extends HelperBase {
 
     private void creationContactButton() {
         click(By.xpath("//form[@name='theform']/input[@name='submit']"));
+    }
+
+    private void modificationContactButton() {
+        click(By.xpath("//input[@name='update']"));
     }
 
     private void fillContactFields(ContactData contact) {
@@ -121,5 +140,20 @@ public class ContactHelper extends HelperBase {
         for (WebElement contactElement :contactsList) {
             contactElement.click();
         }
+    }
+
+    public List<ContactData> getList() {
+        ArrayList<ContactData> contacts = new ArrayList<>();
+        var table = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
+        for (var tr : table) {
+            //var name = tr.getText();
+            var name = tr.findElement(By.cssSelector("td:nth-of-type(3)")).getText();
+            var checkbox = tr.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            contacts.add(new ContactData()
+                    .withId(id)
+                    .withName(name));
+        }
+        return contacts;
     }
 }
