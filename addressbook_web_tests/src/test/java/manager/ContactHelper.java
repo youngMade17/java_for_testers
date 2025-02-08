@@ -18,8 +18,8 @@ public class ContactHelper extends HelperBase {
     }
 
     public void createContact(ContactData contact) {
-        openCreationContactForm();
-        fillContactFields(contact);
+        initContactCreation();
+        fillContactForm(contact);
         creationContactButton();
         contactHomePageReturn();
     }
@@ -27,7 +27,7 @@ public class ContactHelper extends HelperBase {
     public void modifyContact(ContactData contact, ContactData modifiedContact) {
         //selectContact(contact);
         initContactModification(contact);
-        fillContactFields(modifiedContact);
+        fillContactForm(modifiedContact);
         modificationContactButton();
         contactHomePageReturn();
     }
@@ -68,13 +68,14 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@name='update']"));
     }
 
-    private void fillContactFields(ContactData contact) {
+    private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
         type(By.name("middlename"), contact.middleName());
         type(By.name("lastname"), contact.lastName());
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobile());
         type(By.name("email"), contact.email());
+        attach(By.name("photo"), contact.photo());
         // Заполнение остальных полей контакта
 //        driver.findElement(By.name("nickname")).click();
 //        driver.findElement(By.name("nickname")).sendKeys("Nickname");
@@ -126,7 +127,7 @@ public class ContactHelper extends HelperBase {
 //        driver.findElement(By.cssSelector("input:nth-child(75)")).click();
     }
 
-    private void openCreationContactForm() {
+    private void initContactCreation() {
         click(By.linkText("add new"));
     }
 
@@ -152,7 +153,7 @@ public class ContactHelper extends HelperBase {
             var id = checkbox.getAttribute("value");
             contacts.add(new ContactData()
                     .withId(id)
-                    .withName(name));
+                    .withFirstName(name));
         }
         return contacts;
     }

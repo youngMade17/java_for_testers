@@ -14,8 +14,12 @@ import java.util.List;
 public class ContactCreationTests extends TestBase {
 
     @Test
-    public void canCreateContactWithBasicInfo() {
-        app.contacts().createContact(new ContactData().withBasicInfo("","1", "2", "3", "4", "5", "6"));
+    public void canCreateContact() {
+        app.contacts().createContact(new ContactData()
+                .withFirstName(randomString(10))
+                .withLastName(randomString(10))
+                .withPhoto("src/test/resources/images/avatar.png")
+        );
     }
 
     @ParameterizedTest
@@ -45,7 +49,7 @@ public class ContactCreationTests extends TestBase {
         ArrayList<ContactData> arr = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             arr.add(new ContactData()
-                    .withName(randomString(i * 10))
+                    .withFirstName(randomString(i * 10))
                     .withLastName(randomString(i * 10))
                     .withMiddleName(randomString(i * 10))
                     .withAddress(randomString(i * 10))
@@ -70,7 +74,7 @@ public class ContactCreationTests extends TestBase {
     }
     public static ArrayList<ContactData> negativeContactProvider() {
         ArrayList<ContactData> arr = new ArrayList<>(List.of(
-                new ContactData().withName("contact name ' ")
+                new ContactData().withFirstName("contact name ' ")
         ));
         return arr;
     }
