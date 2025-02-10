@@ -1,6 +1,6 @@
-package tests;
+package ru.stqa.addressbook.tests;
 
-import manager.ApplicationManager;
+import ru.stqa.addressbook.manager.ApplicationManager;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
@@ -16,15 +16,6 @@ public class TestBase {
             app = new ApplicationManager();
         }
         app.init(System.getProperty("browser", "chrome"));
-    }
-
-    public static String randomString(int count) {
-        Random randomChar = new Random();
-        String str = "";
-        for (int i = 0; i < count; i++) {
-            str = str + (char)('a' + randomChar.nextInt(27));
-        }
-        return str;
     }
 
     public static String randomFile(String dir) {

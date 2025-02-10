@@ -1,4 +1,4 @@
-package local;
+package ru.stqa.addressbook.local;
 
 public record GroupData(String id, String name, String header, String footer) {
     public GroupData() {

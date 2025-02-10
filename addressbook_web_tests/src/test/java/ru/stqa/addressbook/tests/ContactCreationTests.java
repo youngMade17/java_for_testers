@@ -1,6 +1,7 @@
-package tests;
+package ru.stqa.addressbook.tests;
 
-import local.ContactData;
+import ru.stqa.addressbook.common.CommonFunctions;
+import ru.stqa.addressbook.local.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,8 +17,8 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void canCreateContact() {
         app.contacts().createContact(new ContactData()
-                .withFirstName(randomString(10))
-                .withLastName(randomString(10))
+                .withFirstName(CommonFunctions.randomString(10))
+                .withLastName(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images"))
         );
     }
@@ -49,12 +50,12 @@ public class ContactCreationTests extends TestBase {
         ArrayList<ContactData> arr = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             arr.add(new ContactData()
-                    .withFirstName(randomString(i * 10))
-                    .withLastName(randomString(i * 10))
-                    .withMiddleName(randomString(i * 10))
-                    .withAddress(randomString(i * 10))
-                    .withEmail(randomString(i * 10))
-                    .withMobile(randomString(i * 10))
+                    .withFirstName(CommonFunctions.randomString(i * 10))
+                    .withLastName(CommonFunctions.randomString(i * 10))
+                    .withMiddleName(CommonFunctions.randomString(i * 10))
+                    .withAddress(CommonFunctions.randomString(i * 10))
+                    .withEmail(CommonFunctions.randomString(i * 10))
+                    .withMobile(CommonFunctions.randomString(i * 10))
             );
         }
         return arr;

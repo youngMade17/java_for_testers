@@ -1,4 +1,4 @@
-package local;
+package ru.stqa.addressbook.local;
 
 public record ContactData(String id, String firstName, String lastName, String middleName, String address, String email, String mobile, String photo) {
     public ContactData() {

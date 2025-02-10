@@ -1,6 +1,6 @@
-package manager;
+package ru.stqa.addressbook.manager;
 
-import local.ContactData;
+import ru.stqa.addressbook.local.ContactData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
