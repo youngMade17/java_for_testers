@@ -1,12 +1,11 @@
 package ru.stqa.addressbook.tests;
 
-import ru.stqa.addressbook.common.CommonFunctions;
-import ru.stqa.addressbook.local.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.NoSuchElementException;
+import ru.stqa.addressbook.common.CommonFunctions;
+import ru.stqa.addressbook.local.ContactData;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -64,14 +63,10 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
     public void canNotCreateContact(ContactData contact) {
-        try {
-            int contactCount = app.groups().getCount();
-            app.contacts().createContact(contact);
-            int newContactCount = app.groups().getCount();
-            Assertions.assertEquals(contactCount, newContactCount);
-        } catch (NoSuchElementException e) {
-            System.out.println("---------------------------Error!---------------------------");
-        }
+        int contactCount = app.groups().getCount();
+        app.contacts().createContact(contact);
+        int newContactCount = app.groups().getCount();
+        Assertions.assertEquals(contactCount, newContactCount);
     }
     public static ArrayList<ContactData> negativeContactProvider() {
         ArrayList<ContactData> arr = new ArrayList<>(List.of(

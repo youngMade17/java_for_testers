@@ -1,34 +1,32 @@
 package ru.stqa.addressbook.tests;
 
-import ru.stqa.addressbook.common.CommonFunctions;
-import ru.stqa.addressbook.local.GroupData;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.NoSuchElementException;
+import ru.stqa.addressbook.local.GroupData;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class GroupCreationTests extends TestBase {
 
-    public static ArrayList<GroupData> groupProvider() {
+    public static ArrayList<GroupData> groupProvider() throws IOException {
         ArrayList<GroupData> result = new ArrayList<>();
-        for (var name : List.of("", "group name")) {
-            for (var header  : List.of("", "header name")) {
-                for (var footer : List.of("", "footer name")) {
-                    result.add(new GroupData().withName(name).withHeader(header).withFooter(footer));
-                }
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            result.add(new GroupData()
-                    .withName(CommonFunctions.randomString(i * 10))
-                    .withHeader(CommonFunctions.randomString(i * 10))
-                    .withFooter(CommonFunctions.randomString(i * 10))
-            );
-        }
+//        for (var name : List.of("", "group name")) {
+//            for (var header  : List.of("", "header name")) {
+//                for (var footer : List.of("", "footer name")) {
+//                    result.add(new GroupData().withName(name).withHeader(header).withFooter(footer));
+//                }
+//            }
+//        }
+        ObjectMapper mapper = new ObjectMapper();
+        var value = mapper.readValue(new File("groups.json"), new TypeReference<List<GroupData>>(){});
+        result.addAll(value);
         return result;
     }
 
@@ -69,14 +67,10 @@ public class GroupCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeGroupProvider")
     public void canNotCreateGroup(GroupData group) {
-        try {
-            var oldGroups = app.groups().getList();
-            app.groups().createGroup(group);
-            var newGroups = app.groups().getList();
-            Assertions.assertEquals(newGroups, oldGroups);
-        } catch (NoSuchElementException e) {
-            System.out.println("---------------------------Error!---------------------------");
-        }
+        var oldGroups = app.groups().getList();
+        app.groups().createGroup(group);
+        var newGroups = app.groups().getList();
+        Assertions.assertEquals(newGroups, oldGroups);
     }
 
 
