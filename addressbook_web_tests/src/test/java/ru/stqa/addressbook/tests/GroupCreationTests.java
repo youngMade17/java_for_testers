@@ -7,7 +7,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.local.GroupData;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,8 +25,25 @@ public class GroupCreationTests extends TestBase {
 //                }
 //            }
 //        }
+        // 2-ой способ чтения
+        //var json = Files.readString(Paths.get("groups.json"));
+
+        // 1-ый способ чтения через библиотеку Jackson и класс ObjectMapper
+        //var value = mapper.readValue(new File("groups.json"), new TypeReference<List<GroupData>>(){});
+
+        // 3-й способ чтения
+        var json = "";
+        try (var reader = new FileReader("groups.json");
+             var breader = new BufferedReader(reader)) {
+            var line = breader.readLine();
+            while (line != null) {
+                json += line;
+                line = breader.readLine();
+            }
+        }
+
         ObjectMapper mapper = new ObjectMapper();
-        var value = mapper.readValue(new File("groups.json"), new TypeReference<List<GroupData>>(){});
+        var value = mapper.readValue(json, new TypeReference<List<GroupData>>(){});
         result.addAll(value);
         return result;
     }
