@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import ru.stqa.addressbook.common.CommonFunctions;
+import ru.stqa.addressbook.local.ContactData;
 import ru.stqa.addressbook.local.GroupData;
 
 import java.io.File;
@@ -14,8 +15,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static ru.stqa.addressbook.tests.TestBase.randomFile;
+
 public class Generator {
     //--type groups --output groups.json --format json --count 3
+    //--type contacts --output contacts.json --format json --count 3
+    //--type contacts --output contacts.xml --format xml --count 3
+    //--type contacts --output contacts.yaml --format yaml --count 3
     @Parameter(names={"--type", "-t"})
     String type;
     @Parameter(names={"--output", "-o"})
@@ -50,7 +56,19 @@ public class Generator {
     }
 
     private Object generateContacts() {
-        return null;
+        ArrayList<ContactData> result = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            result.add(new ContactData()
+                    .withFirstName(CommonFunctions.randomString(i*10))
+                    .withLastName(CommonFunctions.randomString(i*10))
+                    .withMiddleName(CommonFunctions.randomString(i*10))
+                    .withAddress(CommonFunctions.randomString(i*10))
+                    .withEmail(CommonFunctions.randomString(i*10))
+                    .withMobile(CommonFunctions.randomString(i*10))
+                    .withPhoto(randomFile("src/test/resources/images"))
+            );
+        }
+        return result;
     }
 
     private Object generateGroups() {

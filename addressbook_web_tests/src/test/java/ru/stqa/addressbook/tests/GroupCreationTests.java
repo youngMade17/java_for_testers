@@ -41,7 +41,6 @@ public class GroupCreationTests extends TestBase {
 //                line = breader.readLine();
 //            }
 //        }
-
         //ObjectMapper mapper = new ObjectMapper();
 
         var mapper = new XmlMapper();
