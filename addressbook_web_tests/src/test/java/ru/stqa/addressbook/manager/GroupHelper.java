@@ -11,7 +11,6 @@ public class GroupHelper extends HelperBase{
 
     public GroupHelper(ApplicationManager manager) {
         super(manager);
-
     }
 
     public void openGroupsPage() {

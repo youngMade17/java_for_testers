@@ -31,6 +31,7 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.woodstox:woodstox-core:6.6.2" level="project" />
     <orderEntry type="library" name="Gradle: org.codehaus.woodstox:stax2-api:4.2.2" level="project" />
     <orderEntry type="library" name="Gradle: org.yaml:snakeyaml:2.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.mysql:mysql-connector-j:8.0.33" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-chromium-driver:4.28.1" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-manager:4.28.1" level="project" />
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-json:4.28.1" level="project" />
@@ -49,6 +50,7 @@
     <orderEntry type="library" name="Gradle: io.opentelemetry:opentelemetry-api:1.46.0" level="project" />
     <orderEntry type="library" name="Gradle: io.opentelemetry:opentelemetry-context:1.46.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jspecify:jspecify:1.0.0" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.protobuf:protobuf-java:3.21.9" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:failureaccess:1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2" level="project" />
