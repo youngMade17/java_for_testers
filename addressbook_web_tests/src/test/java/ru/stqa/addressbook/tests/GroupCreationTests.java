@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.common.CommonFunctions;
-import ru.stqa.addressbook.local.GroupData;
+import ru.stqa.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,10 +20,12 @@ public class GroupCreationTests extends TestBase {
     @MethodSource("singleRandomGroup")
     public void canCreateGroup(GroupData group) {
         //var oldGroups = app.groups().getList();
-        var oldGroups = app.jdbc().getGroupList();
+        //var oldGroups = app.jdbc().getGroupList();
+        var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
         //var newGroups = app.groups().getList();
-        var newGroups = app.jdbc().getGroupList();
+        //var newGroups = app.jdbc().getGroupList();
+        var newGroups = app.hbm().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };

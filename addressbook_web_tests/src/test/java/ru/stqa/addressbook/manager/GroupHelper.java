@@ -1,6 +1,6 @@
 package ru.stqa.addressbook.manager;
 
-import ru.stqa.addressbook.local.GroupData;
+import ru.stqa.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 

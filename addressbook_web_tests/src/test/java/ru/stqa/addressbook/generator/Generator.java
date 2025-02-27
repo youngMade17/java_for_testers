@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import ru.stqa.addressbook.common.CommonFunctions;
-import ru.stqa.addressbook.local.ContactData;
-import ru.stqa.addressbook.local.GroupData;
+import ru.stqa.addressbook.model.ContactData;
+import ru.stqa.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileWriter;

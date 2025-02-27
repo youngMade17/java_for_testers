@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.stqa.addressbook.common.CommonFunctions;
-import ru.stqa.addressbook.local.ContactData;
+import ru.stqa.addressbook.model.ContactData;
 
 import java.io.File;
 import java.io.IOException;
