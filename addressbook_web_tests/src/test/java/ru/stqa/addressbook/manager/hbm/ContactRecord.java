@@ -22,6 +22,18 @@ public class ContactRecord {
     public String address;
 
     public Date deprecated = new Date();
+    public String middlename = "default middlename";
+    public String nickname = "default nickname";
+    public String company = "default company";
+    public String title = "default title";
+    public String home = "default home";
+    public String mobile = "default mobile";
+    public String work = "default work";
+    public String fax = "default fax";
+    public String email = "default email";
+    public String email2 = "default email2";
+    public String email3 = "default email3";
+    public String homepage = "default homepage";
 
     public ContactRecord() {
     }

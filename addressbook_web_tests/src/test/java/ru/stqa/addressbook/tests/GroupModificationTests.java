@@ -12,8 +12,6 @@ public class GroupModificationTests extends TestBase {
     @Test
     void canModifyGroup() {
 //        if (app.groups().getCount() == 0) {
-//            app.groups().createGroup(new GroupData().withName("Modify Group"));
-//        }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData()
                     .withName("Modify Group")
