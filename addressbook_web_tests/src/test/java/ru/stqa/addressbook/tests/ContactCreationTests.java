@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class ContactCreationTests extends TestBase {
 
@@ -47,6 +48,72 @@ public class ContactCreationTests extends TestBase {
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size()+1, newRelated.size());
     }
+
+    @Test
+    public void addRandomContactInGroup() {
+        // Альтернативный вариант реализации
+        //Тест, который берет рандомные контакт и группу, которые предварительно создает если нет уже существующих
+        if (app.hbm().getContactCount() == 0) {
+            app.contacts().createContact(
+                    new ContactData()
+                            .withFirstName(CommonFunctions.randomString(10))
+                            .withLastName(CommonFunctions.randomString(10))
+                            .withPhoto(randomFile("src/test/resources/images"))
+            );
+        }
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData()
+                    .withName(CommonFunctions.randomString(10))
+                    .withHeader(CommonFunctions.randomString(10))
+                    .withFooter(CommonFunctions.randomString(10))
+            );
+        }
+        var groups = app.hbm().getGroupList();
+        var randomGroup = new Random().nextInt(groups.size());
+        var group = groups.get(randomGroup);
+
+        var contacts = app.hbm().getContactList();
+        var randomContact = new Random().nextInt(contacts.size());
+        var contact = contacts.get(randomContact);
+
+        app.contacts().addContactInGroup(contact, group);
+
+    }
+
+    @Test
+    public void replaceContactInGroup() {
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+
+        var contact = new ContactData()
+            .withFirstName(CommonFunctions.randomString(10))
+            .withLastName(CommonFunctions.randomString(10))
+            .withPhoto(randomFile("src/test/resources/images"));
+
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData()
+                    .withName("Group name 2")
+                    .withHeader("Group header 2")
+                    .withFooter("Group footer2")
+            );
+        }
+        var group = app.hbm().getGroupList().get(0);
+        var oldRelated = app.hbm().getContactsInGroup(group);
+
+        app.contacts().createContact(contact);
+        //var contactList = app.contacts().getList();
+        var contactList = app.hbm().getContactList();
+        contactList.sort(compareById);
+        contact = contactList.get(contactList.size()-1);
+        app.contacts().addContactInGroup(contact, group);
+
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size()+1, newRelated.size());
+
+    }
+
+
 
     @ParameterizedTest
     @MethodSource("contactProvider")
