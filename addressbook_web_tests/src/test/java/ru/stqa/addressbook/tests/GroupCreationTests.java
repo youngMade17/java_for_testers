@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class GroupCreationTests extends TestBase {
 
@@ -62,13 +64,15 @@ public class GroupCreationTests extends TestBase {
         expectedListUI.sort(compareById);
         Assertions.assertEquals(newGroupsOfUI, expectedListUI);
     }
-    public static List<GroupData> singleRandomGroup() throws IOException {
-        return List.of(new GroupData()
+
+    public static Stream<GroupData> singleRandomGroup() throws IOException {
+        Supplier<GroupData> groupDataSupplier = () -> new GroupData()
                 .withName(CommonFunctions.randomString(10))
                 .withHeader(CommonFunctions.randomString(20))
-                .withFooter(CommonFunctions.randomString(30))
-        );
+                .withFooter(CommonFunctions.randomString(30));
+        return Stream.generate(groupDataSupplier).limit(3);
     }
+
     public static ArrayList<GroupData> groupProvider() throws IOException {
         ArrayList<GroupData> result = new ArrayList<>();
 //        for (var name : List.of("", "group name")) {
@@ -119,6 +123,7 @@ public class GroupCreationTests extends TestBase {
         //var newGroups = app.groups().getList();
         Assertions.assertEquals(newGroups, oldGroups);
     }
+
     public static ArrayList<GroupData> negativeGroupProvider() {
         ArrayList<GroupData> result = new ArrayList<>(List.of(
                 new GroupData().withName("group name ' ").withHeader("").withFooter("")
