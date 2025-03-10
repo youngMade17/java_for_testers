@@ -13,35 +13,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class GroupCreationTests extends TestBase {
 
     @ParameterizedTest
-    @MethodSource("singleRandomGroup")
+    @MethodSource("randomGroups")
     public void canCreateGroup(GroupData group) {
-        //var oldGroups = app.groups().getList();
-        //var oldGroups = app.jdbc().getGroupList();
+
         var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
-        //var newGroups = app.groups().getList();
-        //var newGroups = app.jdbc().getGroupList();
         var newGroups = app.hbm().getGroupList();
-        Comparator<GroupData> compareById = (o1, o2) -> {
-            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-        };
-        newGroups.sort(compareById);
-        var maxId = newGroups.get(newGroups.size()-1).id();
+
+        var extraGroups = newGroups.stream().filter(g -> !oldGroups.contains(g)).toList();
+        var newId = extraGroups.get(0).id();
+
         var expectedList = new ArrayList<>(oldGroups);
-        expectedList.add(group.withId(maxId));
-        expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        expectedList.add(group.withId(newId));
+        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
     }
 
     // Дополнительный тест для сверки списка из UI со списком из БД
     @ParameterizedTest
-    @MethodSource("singleRandomGroup")
+    @MethodSource("randomGroups")
     public void canCreateGroupUICheck(GroupData group) {
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -65,7 +61,18 @@ public class GroupCreationTests extends TestBase {
         Assertions.assertEquals(newGroupsOfUI, expectedListUI);
     }
 
-    public static Stream<GroupData> singleRandomGroup() throws IOException {
+    @ParameterizedTest
+    @MethodSource("negativeGroupProvider")
+    public void canNotCreateGroup(GroupData group) {
+        //var oldGroups = app.groups().getList();
+        var oldGroups = app.hbm().getGroupList();
+        app.groups().createGroup(group);
+        var newGroups = app.hbm().getGroupList();
+        //var newGroups = app.groups().getList();
+        Assertions.assertEquals(newGroups, oldGroups);
+    }
+
+    public static Stream<GroupData> randomGroups() throws IOException {
         Supplier<GroupData> groupDataSupplier = () -> new GroupData()
                 .withName(CommonFunctions.randomString(10))
                 .withHeader(CommonFunctions.randomString(20))
@@ -111,17 +118,6 @@ public class GroupCreationTests extends TestBase {
         result.addAll(value);
 
         return result;
-    }
-
-    @ParameterizedTest
-    @MethodSource("negativeGroupProvider")
-    public void canNotCreateGroup(GroupData group) {
-        //var oldGroups = app.groups().getList();
-        var oldGroups = app.hbm().getGroupList();
-        app.groups().createGroup(group);
-        var newGroups = app.hbm().getGroupList();
-        //var newGroups = app.groups().getList();
-        Assertions.assertEquals(newGroups, oldGroups);
     }
 
     public static ArrayList<GroupData> negativeGroupProvider() {
