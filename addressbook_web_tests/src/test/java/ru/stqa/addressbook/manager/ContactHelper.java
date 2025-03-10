@@ -188,4 +188,8 @@ public class ContactHelper extends HelperBase {
         click(By.name("remove"));
         click(By.cssSelector(String.format("a[href='./?group=%s']", group.id())));
     }
+
+    public String getPhones(ContactData contact) {
+        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../../td[6]", contact.id()))).getText();
+    }
 }

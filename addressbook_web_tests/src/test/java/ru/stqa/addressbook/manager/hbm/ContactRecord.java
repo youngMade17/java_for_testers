@@ -20,15 +20,18 @@ public class ContactRecord {
     public String lastName;
     @Column(name = "address")
     public String address;
+    @Column(name = "home")
+    public String home;
+    @Column(name = "mobile")
+    public String mobile;
+    @Column(name = "work")
+    public String work;
 
     public Date deprecated = new Date();
     public String middlename = "default middlename";
     public String nickname = "default nickname";
     public String company = "default company";
     public String title = "default title";
-    public String home = "default home";
-    public String mobile = "default mobile";
-    public String work = "default work";
     public String fax = "default fax";
     public String email = "default email";
     public String email2 = "default email2";
