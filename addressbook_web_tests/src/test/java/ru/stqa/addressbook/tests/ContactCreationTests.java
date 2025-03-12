@@ -113,8 +113,6 @@ public class ContactCreationTests extends TestBase {
 
     }
 
-
-
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(ContactData contact) {
@@ -130,16 +128,29 @@ public class ContactCreationTests extends TestBase {
         newContacts.sort(compareById);
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.add(contact
-                .withId(newContacts.get(newContacts.size()-1).id())
-                .withMiddleName("")
-                .withEmail("")
-                .withMobile("")
-                .withPhoto("")
+                        .withId(newContacts.get(newContacts.size()-1).id())
+                        .withMiddleName("")
+                        .withEmail("")
+                        .withMobile("")
+                        .withPhoto("")
 //                .withPhoto(newContacts.get(newContacts.size()-1).photo())
         );
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
+
+    @ParameterizedTest
+    @MethodSource("negativeContactProvider")
+    public void canNotCreateContact(ContactData contact) {
+        int contactCount = app.groups().getCount();
+        app.contacts().createContact(contact);
+        int newContactCount = app.groups().getCount();
+        Assertions.assertEquals(contactCount, newContactCount);
+    }
+
+
+
+
     public static ArrayList<ContactData> contactProvider() throws IOException {
         ArrayList<ContactData> arr = new ArrayList<>();
         // 0. Первоначальный способ генерации данных
@@ -182,14 +193,7 @@ public class ContactCreationTests extends TestBase {
         return arr;
     }
 
-    @ParameterizedTest
-    @MethodSource("negativeContactProvider")
-    public void canNotCreateContact(ContactData contact) {
-        int contactCount = app.groups().getCount();
-        app.contacts().createContact(contact);
-        int newContactCount = app.groups().getCount();
-        Assertions.assertEquals(contactCount, newContactCount);
-    }
+
     public static ArrayList<ContactData> negativeContactProvider() {
         ArrayList<ContactData> arr = new ArrayList<>(List.of(
                 new ContactData().withFirstName("contact name ' ")

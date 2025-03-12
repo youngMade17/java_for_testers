@@ -26,6 +26,12 @@ public class ContactRecord {
     public String mobile;
     @Column(name = "work")
     public String work;
+    @Column(name = "email")
+    public String email;
+    @Column(name = "email2")
+    public String email2;
+    @Column(name = "email3")
+    public String email3;
 
     public Date deprecated = new Date();
     public String middlename = "default middlename";
@@ -33,9 +39,6 @@ public class ContactRecord {
     public String company = "default company";
     public String title = "default title";
     public String fax = "default fax";
-    public String email = "default email";
-    public String email2 = "default email2";
-    public String email3 = "default email3";
     public String homepage = "default homepage";
 
     public ContactRecord() {
