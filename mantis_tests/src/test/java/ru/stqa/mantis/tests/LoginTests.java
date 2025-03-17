@@ -7,8 +7,9 @@ public class LoginTests extends TestBase {
 
     @Test
     void canLogin() throws InterruptedException {
-        app.session().login("administrator", "root");
+//        app.session().login("administrator", "root");
+        app.http().login("administrator", "root");
         Thread.sleep(500);
-        Assertions.assertTrue(app.session().isLoggedIn());
+        Assertions.assertTrue(app.http().isLoggedIn());
     }
 }
