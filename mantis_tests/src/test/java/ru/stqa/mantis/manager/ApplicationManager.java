@@ -13,7 +13,8 @@ public class ApplicationManager {
     private static Properties properties;
     private SessionHelper sessionHelper;
     private HttpSessionHelper httpSessionHelper;
-    private JamesCliHelper JamesCliHelper;
+    private JamesCliHelper jamesCliHelper;
+    private MailHelper mailHelper;
 
     public void init(String browser, Properties properties) {
         this.browser = browser;
@@ -51,10 +52,17 @@ public class ApplicationManager {
     }
 
     public JamesCliHelper JamesCli() {
-        if (JamesCliHelper == null) {
-            JamesCliHelper = new JamesCliHelper(this);
+        if (jamesCliHelper == null) {
+            jamesCliHelper = new JamesCliHelper(this);
         }
-        return JamesCliHelper;
+        return jamesCliHelper;
+    }
+
+    public MailHelper mail() {
+        if (mailHelper == null) {
+            mailHelper = new MailHelper(this);
+        }
+        return mailHelper;
     }
 
     public String property(String name) {
