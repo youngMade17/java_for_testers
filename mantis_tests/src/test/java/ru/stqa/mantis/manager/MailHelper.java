@@ -8,6 +8,8 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MailHelper extends HelperBase{
     public MailHelper(ApplicationManager manager) {
@@ -63,6 +65,18 @@ public class MailHelper extends HelperBase{
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String extract(String email, String password) {
+        var messages = receive(email, password, Duration.ofSeconds(10));
+        var text = messages.get(0).content();
+        Pattern pattern = Pattern.compile("http://\\S*");
+        Matcher matcher = pattern.matcher(text);
+        var url = "";
+        while (matcher.find()) {
+            url = text.substring(matcher.start(), matcher.end());
+        }
+        return url;
     }
 
     private static Folder getInbox(String userName, String password) {
