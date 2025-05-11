@@ -8,9 +8,9 @@ public class SessionHelper extends HelperBase {
     }
 
     public void login(String user, String password) {
-        type(By.name("username"), user);
+        type(By.id("username"), user);
         click(By.cssSelector("input[type='submit']"));
-        type(By.name("password"), password);
+        type(By.id("password"), password);
         click(By.cssSelector("input[type='submit']"));
     }
 

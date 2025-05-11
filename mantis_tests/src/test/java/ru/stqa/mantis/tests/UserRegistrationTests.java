@@ -16,12 +16,18 @@ public class UserRegistrationTests extends TestBase {
 
         var userName = CommonFunctions.randomString(10);
         var email = String.format("%s@localhost", userName);
-        app.JamesCli().addUser(email, "password");
+        //app.JamesCli().addUser(email, "password");
+        app.JamesApi().addUser(email, "password");
         app.session().signUp(userName, email, "password");
         var url = app.mail().extract(email, "password");
         app.driver().get(url);
         app.session().editAccount(userName, "password");
-        app.session().login(userName, "password");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        app.http().login(userName, "password");
         app.http().isLoggedIn();
         //app.session().isLoggedIn();
     }
