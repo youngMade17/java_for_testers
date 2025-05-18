@@ -17,7 +17,7 @@ public class UserRegistrationTests extends TestBase {
         var userName = CommonFunctions.randomString(10);
         var email = String.format("%s@localhost", userName);
         //app.JamesCli().addUser(email, "password");
-        app.JamesApi().addUser(email, "password");
+        app.jamesApi().addUser(email, "password");
         app.session().signUp(userName, email, "password");
         var url = app.mail().extract(email, "password");
         app.driver().get(url);
